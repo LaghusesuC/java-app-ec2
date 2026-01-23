@@ -30,9 +30,9 @@ pipeline {
         withCredentials([usernamePassword(
           credentialsId: 'dockerhub-creds',
           usernameVariable: 'laghusesu',
-          passwordVariable: 'Oxrugdocker@18'
+          passwordVariable: ''
         )]) {
-          sh 'echo Oxrugdocker@18 | docker login -u laghusesu --password-stdin'
+          sh 'echo  | docker login -u laghusesu --password-stdin'
           sh 'docker push java-image:1.0 .'
         }
       }
@@ -43,7 +43,7 @@ pipeline {
         sh '''
           docker stop springboot-container || true
           docker rm springboot-container || true
-          docker run -d -p 8080:8080 --name springboot-container $DOCKER_IMAGE
+          docker run -d -p 8080:8080 --name springboot-container java-image:1.0
         '''
       }
     }
